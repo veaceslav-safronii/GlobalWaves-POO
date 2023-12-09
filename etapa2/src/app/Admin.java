@@ -4,7 +4,9 @@ import app.audio.Collections.Playlist;
 import app.audio.Collections.Podcast;
 import app.audio.Files.Episode;
 import app.audio.Files.Song;
+import app.user.NormalUser;
 import app.user.User;
+import app.utils.Enums;
 import fileio.input.EpisodeInput;
 import fileio.input.PodcastInput;
 import fileio.input.SongInput;
@@ -35,7 +37,8 @@ public final class Admin {
     public static void setUsers(final List<UserInput> userInputList) {
         users = new ArrayList<>();
         for (UserInput userInput : userInputList) {
-            users.add(new User(userInput.getUsername(), userInput.getAge(), userInput.getCity()));
+            users.add(new NormalUser(userInput.getUsername(),
+                    userInput.getAge(), userInput.getCity()));
         }
     }
 
@@ -98,7 +101,9 @@ public final class Admin {
     public static List<Playlist> getPlaylists() {
         List<Playlist> playlists = new ArrayList<>();
         for (User user : users) {
-            playlists.addAll(user.getPlaylists());
+            if (user.getType().equals("normal")) {
+                playlists.addAll(((NormalUser) user).getPlaylists());
+            }
         }
         return playlists;
     }
@@ -131,7 +136,9 @@ public final class Admin {
         }
 
         for (User user : users) {
-            user.simulateTime(elapsed);
+            if (user.getType().equals("normal") && ((NormalUser) user).getStatus() == Enums.UserStatus.ONLINE) {
+                ((NormalUser) user).simulateTime(elapsed);
+            }
         }
     }
 
@@ -175,6 +182,17 @@ public final class Admin {
             count++;
         }
         return topPlaylists;
+    }
+
+    public static List<String> getOnlineUsers() {
+        List<String> onlineUsers = new ArrayList<>();
+        for (User user : users) {
+            if (user.getType().equals("normal") &&
+                    ((NormalUser) user).getStatus() == Enums.UserStatus.ONLINE) {
+                onlineUsers.add(user.getUsername());
+            }
+        }
+        return onlineUsers;
     }
 
     /**
