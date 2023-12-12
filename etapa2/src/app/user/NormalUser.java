@@ -6,14 +6,19 @@ import app.audio.Collections.PlaylistOutput;
 import app.audio.Files.AudioFile;
 import app.audio.Files.Song;
 import app.audio.LibraryEntry;
+import app.pages.HomePage;
+import app.pages.Page;
+import app.pages.PageFactory;
 import app.player.Player;
 import app.player.PlayerStats;
 import app.searchBar.Filters;
 import app.searchBar.SearchBar;
 import app.utils.Enums;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -29,8 +34,11 @@ public class NormalUser extends User {
     @Getter
     private ArrayList<Playlist> followedPlaylists;
     private final Player player;
+    @Getter
     private final SearchBar searchBar;
     private boolean lastSearched;
+    @Getter @Setter
+    private String currentPageType;
 
     /**
      * Instantiates a new User.
@@ -47,6 +55,7 @@ public class NormalUser extends User {
         player = new Player();
         searchBar = new SearchBar(username);
         lastSearched = false;
+        currentPageType = "homepage";
     }
 
     /**
@@ -308,7 +317,7 @@ public class NormalUser extends User {
             return "A playlist with the same name already exists.";
         }
 
-        playlists.add(new Playlist(name, super.getUsername(), timestamp));
+        playlists.add(new Playlist(name, getUsername(), timestamp));
 
         return "Playlist created successfully.";
     }
@@ -397,7 +406,7 @@ public class NormalUser extends User {
 
         Playlist playlist = (Playlist) selection;
 
-        if (playlist.getOwner().equals(super.getUsername())) {
+        if (playlist.getOwner().equals(getUsername())) {
             return "You cannot follow or unfollow your own playlist.";
         }
 
@@ -482,13 +491,25 @@ public class NormalUser extends User {
      */
     public String switchConnectionStatus() {
         if (!super.getType().equals("normal")) {
-            return super.getUsername() + " is not a normal user.";
+            return getUsername() + " is not a normal user.";
         }
         if (status == Enums.UserStatus.ONLINE) {
             status = Enums.UserStatus.OFFLINE;
         } else {
             status = Enums.UserStatus.ONLINE;
         }
-        return super.getUsername() + " has changed status successfully.";
+        return getUsername() + " has changed status successfully.";
+    }
+
+    public Page getPage () {
+        return PageFactory.getPage(this);
+    }
+
+    public String printCurrentPage() {
+        if (status == Enums.UserStatus.ONLINE) {
+            return getPage().printCurrentPage();
+        } else {
+            return getUsername() + " is offline.";
+        }
     }
 }

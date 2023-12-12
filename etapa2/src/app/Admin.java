@@ -1,9 +1,13 @@
 package app;
 
+import app.audio.Collections.Album;
+import app.audio.Collections.AlbumOutput;
 import app.audio.Collections.Playlist;
 import app.audio.Collections.Podcast;
 import app.audio.Files.Episode;
 import app.audio.Files.Song;
+import app.user.Artist;
+import app.user.Host;
 import app.user.NormalUser;
 import app.user.User;
 import app.utils.Enums;
@@ -136,7 +140,8 @@ public final class Admin {
         }
 
         for (User user : users) {
-            if (user.getType().equals("normal") && ((NormalUser) user).getStatus() == Enums.UserStatus.ONLINE) {
+            if (user.getType().equals("normal")
+                    && ((NormalUser) user).getStatus() == Enums.UserStatus.ONLINE) {
                 ((NormalUser) user).simulateTime(elapsed);
             }
         }
@@ -184,15 +189,71 @@ public final class Admin {
         return topPlaylists;
     }
 
+    /**
+     * Gets online users
+     *
+     * @return online users
+     */
     public static List<String> getOnlineUsers() {
         List<String> onlineUsers = new ArrayList<>();
         for (User user : users) {
-            if (user.getType().equals("normal") &&
-                    ((NormalUser) user).getStatus() == Enums.UserStatus.ONLINE) {
+            if (user.getType().equals("normal")
+                    && ((NormalUser) user).getStatus() == Enums.UserStatus.ONLINE) {
                 onlineUsers.add(user.getUsername());
             }
         }
         return onlineUsers;
+    }
+
+    /**
+     * Adds a user in app
+     *
+     * @param username new user's name
+     * @param age new user's age
+     * @param city new user's city
+     * @param type new user's type
+     * @return String
+     */
+    public static String addUser(String username, Integer age, String city, String type) {
+        if (getUser(username) != null) {
+            return "The username " + username + " is already taken.";
+        }
+        switch (type) {
+            case "normal" -> users.add(new NormalUser(username, age, city));
+            case "artist" -> users.add(new Artist(username, age, city));
+            case "host" -> users.add(new Host(username, age, city));
+            default -> {
+                return "Invalid type.";
+            }
+        }
+        return "The username " + username + " has been added successfully.";
+    }
+
+    /**
+     * Adds songs from a new album
+     * @param songInputList input songs
+     */
+    public static void addSong(List<SongInput> songInputList) {
+        for (SongInput songInput : songInputList) {
+            songs.add(new Song(songInput.getName(), songInput.getDuration(), songInput.getAlbum(),
+                    songInput.getTags(), songInput.getLyrics(), songInput.getGenre(),
+                    songInput.getReleaseYear(), songInput.getArtist()));
+        }
+    }
+
+    /**
+     * Shows albums of an artist
+     *
+     * @param artist the artist
+     * @return the albums
+     */
+    public static List<AlbumOutput> showAlbums(Artist artist) {
+        List<Album> albums = artist.getAlbums();
+        List<AlbumOutput> albumOutputs = new ArrayList<>();
+        for (Album album : albums) {
+            albumOutputs.add(new AlbumOutput(album));
+        }
+        return albumOutputs;
     }
 
     /**

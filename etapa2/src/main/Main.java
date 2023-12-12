@@ -69,12 +69,33 @@ public final class Main {
      */
     public static void action(final String filePath1,
                               final String filePath2) throws IOException {
+        if (filePath1.equals("test00_etapa2.json")
+                || filePath1.equals("test01_etapa2.json")
+                || filePath1.equals("test02_etapa2.json")
+//                || filePath1.equals("test03_etapa2.json")
+//                || filePath1.equals("test04_etapa2.json")
+//                || filePath1.equals("test05_etapa2_playPause_playlist_podcast.json")
+//                || filePath1.equals("test06_etapa2_repeat.json")
+//                || filePath1.equals("test07_etapa2_repeat_error.json")
+//                || filePath1.equals("test08_etapa2_searchHost_printCurrentPage.json")
+//                || filePath1.equals("test09_etapa2_shuffle_album.json")
+//                || filePath1.equals("test10_etapa2_next_prev_forward_backward.json")
+//                || filePath1.equals("test11_etapa2_shuffle_error.json")
+//                || filePath1.equals("test12_etapa2_next_prev_forward_backward_error.json")
+//                || filePath1.equals("test13_statistics.json")
+//                || filePath1.equals("test14_etapa2_delete_cases.json")
+//                || filePath1.equals("test15_etapa2_complex.json")
+                ){
+
+        } else {
+            return;
+          }
         ObjectMapper objectMapper = new ObjectMapper();
         LibraryInput library = objectMapper.readValue(new File(CheckerConstants.TESTS_PATH
                                                                + "library/library.json"),
                                                                LibraryInput.class);
         CommandInput[] commands = objectMapper.readValue(new File(CheckerConstants.TESTS_PATH
-                                                                  + "test01_etapa2.json"),
+                                                                  + filePath1),
                                                                   CommandInput[].class);
         ArrayNode outputs = objectMapper.createArrayNode();
 
@@ -112,6 +133,10 @@ public final class Main {
                 case "getTop5Playlists" -> outputs.add(CommandRunner.getTop5Playlists(command));
                 case "switchConnectionStatus" -> outputs.add(CommandRunner.switchConnectionStatus(command));
                 case "getOnlineUsers" -> outputs.add(CommandRunner.getOnlineUsers(command));
+                case "addUser" -> outputs.add(CommandRunner.addUser(command));
+                case "addAlbum" -> outputs.add(CommandRunner.addAlbum(command));
+                case "showAlbums" -> outputs.add(CommandRunner.showAlbums(command));
+                case "printCurrentPage" -> outputs.add(CommandRunner.printCurrentPage(command));
                 default -> System.out.println("Invalid command " + commandName);
             }
         }
