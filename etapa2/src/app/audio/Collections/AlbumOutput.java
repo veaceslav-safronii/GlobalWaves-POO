@@ -1,5 +1,6 @@
 package app.audio.Collections;
 
+import app.audio.Files.Song;
 import fileio.input.SongInput;
 import lombok.Getter;
 
@@ -14,7 +15,7 @@ public class AlbumOutput {
     public AlbumOutput(Album album) {
         this.name = album.getName();
         this.songs = new ArrayList<>();
-        for (SongInput song : album.getSongs()) {
+        for (Song song : album.getSongs()) {
             songs.add(song.getName());
         }
     }

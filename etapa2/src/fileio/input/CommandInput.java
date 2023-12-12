@@ -1,5 +1,7 @@
 package fileio.input;
 
+import app.audio.Files.Episode;
+import app.audio.Files.Song;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -22,6 +24,9 @@ public final class CommandInput {
     private Integer releaseYear;
     private String description;
     private List<SongInput> songs;
+    private String date;
+    private Integer price;
+    private List<EpisodeInput> episodes;
     public CommandInput() {
     }
 

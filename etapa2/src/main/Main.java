@@ -72,7 +72,7 @@ public final class Main {
         if (filePath1.equals("test00_etapa2.json")
                 || filePath1.equals("test01_etapa2.json")
                 || filePath1.equals("test02_etapa2.json")
-//                || filePath1.equals("test03_etapa2.json")
+                || filePath1.equals("test03_etapa2.json")
 //                || filePath1.equals("test04_etapa2.json")
 //                || filePath1.equals("test05_etapa2_playPause_playlist_podcast.json")
 //                || filePath1.equals("test06_etapa2_repeat.json")
@@ -137,6 +137,10 @@ public final class Main {
                 case "addAlbum" -> outputs.add(CommandRunner.addAlbum(command));
                 case "showAlbums" -> outputs.add(CommandRunner.showAlbums(command));
                 case "printCurrentPage" -> outputs.add(CommandRunner.printCurrentPage(command));
+                case "addMerch" -> outputs.add(CommandRunner.addMerch(command));
+                case "addEvent" -> outputs.add(CommandRunner.addEvent(command));
+                case "addPodcast" -> outputs.add(CommandRunner.addPodcast(command));
+                case "addAnnouncement" -> outputs.add(CommandRunner.addAnnouncement(command));
                 default -> System.out.println("Invalid command " + commandName);
             }
         }

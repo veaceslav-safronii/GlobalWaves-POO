@@ -231,14 +231,10 @@ public final class Admin {
 
     /**
      * Adds songs from a new album
-     * @param songInputList input songs
+     * @param songList input songs
      */
-    public static void addSong(List<SongInput> songInputList) {
-        for (SongInput songInput : songInputList) {
-            songs.add(new Song(songInput.getName(), songInput.getDuration(), songInput.getAlbum(),
-                    songInput.getTags(), songInput.getLyrics(), songInput.getGenre(),
-                    songInput.getReleaseYear(), songInput.getArtist()));
-        }
+    public static void addSongs(List<Song> songList) {
+        songs.addAll(songList);
     }
 
     /**
@@ -254,6 +250,10 @@ public final class Admin {
             albumOutputs.add(new AlbumOutput(album));
         }
         return albumOutputs;
+    }
+
+    public static void addPodcasts(List<Podcast> podcastList) {
+        podcasts.addAll(podcastList);
     }
 
     /**
