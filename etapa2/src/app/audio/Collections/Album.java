@@ -1,22 +1,22 @@
 package app.audio.Collections;
 
+import app.audio.Files.AudioFile;
 import app.audio.Files.Song;
-import fileio.input.SongInput;
+import app.utils.Enums;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Getter @Setter
-public class Album {
-    private String name;
+public class Album extends AudioCollection {
     private Integer releaseYear;
     private String description;
-    private List<Song> songs;
+    private ArrayList<Song> songs;
 
-    public Album(String name, Integer releaseYear, String description, List<Song> songs) {
-        this.name = name;
+    public Album(String name, String owner, Integer releaseYear, String description, ArrayList<Song> songs) {
+        super(name, owner);
         this.releaseYear = releaseYear;
         this.description = description;
         this.songs = songs;
@@ -32,4 +32,13 @@ public class Album {
         return songs.contains(song);
     }
 
+    @Override
+    public int getNumberOfTracks() {
+        return getSongs().size();
+    }
+
+    @Override
+    public AudioFile getTrackByIndex(int index) {
+        return songs.get(index);
+    }
 }

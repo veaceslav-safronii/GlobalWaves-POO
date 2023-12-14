@@ -59,6 +59,9 @@ public class HomePage implements Page {
 
     @Override
     public String printCurrentPage() {
-        return "Liked songs:\n\t" + likedSongs + "\n\nFollowed playlists:\n\t" + followedPlaylists;
+        return "Liked songs:\n\t"
+                + likedSongs
+                + "\n\nFollowed playlists:\n\t"
+                + followedPlaylists;
     }
 }

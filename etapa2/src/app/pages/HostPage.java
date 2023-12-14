@@ -6,6 +6,7 @@ import app.extras.Announcement;
 import app.user.Host;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class HostPage implements Page {
     private final List<Podcast> podcasts;
@@ -18,23 +19,20 @@ public class HostPage implements Page {
 
     @Override
     public String printCurrentPage() {
-        StringBuilder str = new StringBuilder("Podcasts:\n\t[");
-
-        for (Podcast podcast : podcasts) {
-            str.append(podcast.getName()).append(":\n\t[");
-            for (Episode episode : podcast.getEpisodes()) {
-                str.append(episode.getName()).append(" - ").append(episode.getDescription())
-                        .append(", ");
-            }
-            str.append("], ");
-        }
-        str.append("]\n\nAnnouncements:\n\t[");
-
-        for (Announcement announcement : announcements) {
-            str.append(announcement.getName()).append("\n\t")
-                    .append(announcement.getDescription()).append("\n, ");
-        }
-        str.append("]");
-        return str.toString();
+        return "Podcasts:\n\t["
+                + podcasts.stream().map(podcast ->
+                        podcast.getName() + ":\n\t["
+                        + podcast.getEpisodes().stream().map(episode ->
+                                episode.getName() + " - "
+                                + episode.getDescription())
+                        .collect(Collectors.joining(", "))
+                        + "]\n")
+                .collect(Collectors.joining(", "))
+                + "]\n\nAnnouncements:\n\t["
+                + announcements.stream().map(announcement ->
+                        announcement.getName() + ":\n\t"
+                        + announcement.getDescription())
+                .collect(Collectors.joining(", "))
+                + "\n]";
     }
 }

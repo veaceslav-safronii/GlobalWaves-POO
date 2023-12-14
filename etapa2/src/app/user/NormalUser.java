@@ -7,12 +7,14 @@ import app.audio.Files.AudioFile;
 import app.audio.Files.Song;
 import app.audio.LibraryEntry;
 import app.pages.HomePage;
+import app.pages.LikedContentPage;
 import app.pages.Page;
 import app.pages.PageFactory;
 import app.player.Player;
 import app.player.PlayerStats;
 import app.searchBar.Filters;
 import app.searchBar.SearchBar;
+import app.searchBar.UserEntry;
 import app.utils.Enums;
 import lombok.Getter;
 import lombok.Setter;
@@ -33,12 +35,15 @@ public class NormalUser extends User {
     private ArrayList<Song> likedSongs;
     @Getter
     private ArrayList<Playlist> followedPlaylists;
+    @Getter
     private final Player player;
     @Getter
     private final SearchBar searchBar;
     private boolean lastSearched;
     @Getter @Setter
     private String currentPageType;
+    @Getter @Setter
+    private LibraryEntry currentPage;
 
     /**
      * Instantiates a new User.
@@ -55,7 +60,8 @@ public class NormalUser extends User {
         player = new Player();
         searchBar = new SearchBar(username);
         lastSearched = false;
-        currentPageType = "homepage";
+        currentPageType = "Home";
+        currentPage = null;
     }
 
     /**
@@ -96,6 +102,24 @@ public class NormalUser extends User {
 
         if (selected == null) {
             return "The selected ID is too high.";
+        }
+
+        switch (searchBar.getLastSearchType()) {
+            case "artist":
+                currentPageType = "Artist";
+                currentPage = selected;
+                break;
+            case "host":
+                currentPageType = "Host";
+                currentPage = selected;
+                break;
+            default:
+                break;
+        }
+
+        if (searchBar.getLastSearchType().equals("artist")
+                || searchBar.getLastSearchType().equals("host")) {
+            return "Successfully selected %s's page.".formatted(selected.getName());
         }
 
         return "Successfully selected %s.".formatted(selected.getName());
@@ -191,8 +215,8 @@ public class NormalUser extends User {
             return "Please load a source before using the shuffle function.";
         }
 
-        if (!player.getType().equals("playlist")) {
-            return "The loaded source is not a playlist.";
+        if ((!player.getType().equals("playlist") && (!player.getType().equals("album")))) {
+            return "The loaded source is not a playlist or an album.";
         }
 
         player.shuffle(seed);
@@ -511,5 +535,15 @@ public class NormalUser extends User {
         } else {
             return getUsername() + " is offline.";
         }
+    }
+
+    public String changePage(String nextPage) {
+        if (nextPage.equals("Home") || nextPage.equals("LikedContent")) {
+            currentPageType = nextPage;
+        } else {
+            return getUsername() + " is trying to access a non-existent page.";
+        }
+        currentPage = null;
+        return getUsername() + " accessed " + nextPage + " successfully.";
     }
 }

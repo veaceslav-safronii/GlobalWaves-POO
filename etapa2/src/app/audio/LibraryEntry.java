@@ -119,4 +119,14 @@ public abstract class LibraryEntry {
     public boolean matchesFollowers(final String followers) {
         return false;
     }
+
+    /**
+     * Matches description boolean
+     *
+     * @param description the description
+     * @return the boolean
+     */
+    public boolean matchesDescription(final String description) {
+        return false;
+    }
 }

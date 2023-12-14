@@ -27,6 +27,7 @@ public final class CommandInput {
     private String date;
     private Integer price;
     private List<EpisodeInput> episodes;
+    private String nextPage;
     public CommandInput() {
     }
 

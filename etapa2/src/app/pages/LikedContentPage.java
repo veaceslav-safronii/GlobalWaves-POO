@@ -2,9 +2,11 @@ package app.pages;
 
 import app.audio.Collections.Playlist;
 import app.audio.Files.Song;
+import app.audio.LibraryEntry;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class LikedContentPage implements Page {
     private final ArrayList<Song> likedSongs;
@@ -17,17 +19,15 @@ public class LikedContentPage implements Page {
 
     @Override
     public String printCurrentPage() {
-        StringBuilder str1 = new StringBuilder("Liked Songs:\n\t[");
-        StringBuilder str2 = new StringBuilder("Followed Playlists:\n\t[");
-        for (Song song : likedSongs) {
-            str1.append(song.getName()).append(" - ").append(song.getArtist()).append(", ");
-        }
-        str1.append("]\n\n");
-
-        for (Playlist playlist : followedPlaylists) {
-            str2.append(playlist.getName()).append(" - ").append(playlist.getOwner()).append(", ");
-        }
-        str2.append("]");
-        return str1.append(str2).toString();
+        return "Liked songs:\n\t["
+                + likedSongs.stream().map(song ->
+                        song.getName() + " - "
+                        + song.getArtist())
+                .collect(Collectors.joining(", "))
+                + "]\n\nFollowed playlists:\n\t["
+                + followedPlaylists.stream().map(playlist ->
+                        playlist.getName() + " - " + playlist.getOwner())
+                .collect(Collectors.joining(", "))
+                + "]";
     }
 }

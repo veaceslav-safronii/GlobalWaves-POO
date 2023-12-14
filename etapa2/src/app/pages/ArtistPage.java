@@ -7,6 +7,7 @@ import app.user.Artist;
 
 import javax.print.DocFlavor;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ArtistPage  implements Page {
     private final List<Album> albums;
@@ -22,24 +23,20 @@ public class ArtistPage  implements Page {
 
     @Override
     public String printCurrentPage() {
-        StringBuilder str = new StringBuilder("Albums:\n\t[");
-
-        for(Album album : albums) {
-            str.append(album.getName()).append(", ");
-        }
-        str.append("]\n\nMerch:\n\t[");
-
-        for(Merch merch : merches) {
-            str.append(merch.getName()).append(" - ").append(merch.getPrice()).append(":\n\t")
-                    .append(merch.getDescription()).append(", ");
-        }
-        str.append("]\n\nEvent:\n\t[");
-
-        for(Event event : events) {
-            str.append(event.getName()).append(" - ").append(event.getDate())
-                    .append(":\n\t").append(event.getDescription()).append(", ");
-        }
-        str.append("]");
-        return str.toString();
+        return "Albums:\n\t["
+                + albums.stream().map(Album::getName)
+                .collect(Collectors.joining(", "))
+                + "]\n\nMerch:\n\t["
+                + merches.stream().map(merch ->
+                        merch.getName() + " - "
+                        + merch.getPrice() + ":\n\t"
+                        + merch.getDescription())
+                .collect(Collectors.joining(", "))
+                + "]\n\nEvents:\n\t["
+                + events.stream().map(event -> event.getName() + " - "
+                        + event.getDate() + ":\n\t"
+                        + event.getDescription())
+                .collect(Collectors.joining(", "))
+                + "]";
     }
 }

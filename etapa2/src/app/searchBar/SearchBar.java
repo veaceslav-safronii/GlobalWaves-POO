@@ -3,6 +3,7 @@ package app.searchBar;
 
 import app.Admin;
 import app.audio.LibraryEntry;
+import app.user.User;
 import lombok.Getter;
 
 import java.util.ArrayList;
@@ -120,6 +121,62 @@ public final class SearchBar {
 
                 if (filters.getOwner() != null) {
                     entries = filterByOwner(entries, filters.getOwner());
+                }
+
+                break;
+            case "artist":
+                List<String> artists = Admin.getUsers().stream()
+                        .filter(user -> user.getType()
+                                .equals("artist"))
+                        .map(User::getUsername)
+                        .toList();
+
+                List<UserEntry> artistEntries = new ArrayList<>();
+
+                for (String artist : artists) {
+                    artistEntries.add(new UserEntry(artist));
+                }
+
+                entries = new ArrayList<>(artistEntries);
+
+                if (filters.getName() != null) {
+                    entries = filterByName(entries, filters.getName());
+                }
+
+                break;
+            case "host":
+                List<String> hosts = Admin.getUsers().stream()
+                        .filter(user -> user.getType()
+                                .equals("host"))
+                        .map(User::getUsername)
+                        .toList();
+
+                List<UserEntry> hostEntries = new ArrayList<>();
+
+                for (String host : hosts) {
+                    hostEntries.add(new UserEntry(host));
+                }
+
+                entries = new ArrayList<>(hostEntries);
+
+                if (filters.getName() != null) {
+                    entries = filterByName(entries, filters.getName());
+                }
+
+                break;
+            case "album":
+                entries = new ArrayList<>(Admin.getAlbums());
+
+                if (filters.getName() != null) {
+                    entries = filterByName(entries, filters.getName());
+                }
+
+                if (filters.getOwner() != null) {
+                    entries = filterByOwner(entries, filters.getOwner());
+                }
+
+                if (filters.getDescription() != null) {
+                entries = filterByOwner(entries, filters.getDescription());
                 }
 
                 break;
