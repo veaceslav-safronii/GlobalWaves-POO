@@ -19,6 +19,7 @@ import static app.searchBar.FilterUtils.filterByOwner;
 import static app.searchBar.FilterUtils.filterByPlaylistVisibility;
 import static app.searchBar.FilterUtils.filterByReleaseYear;
 import static app.searchBar.FilterUtils.filterByTags;
+import static app.searchBar.FilterUtils.filterByDescription;
 
 /**
  * The type Search bar.
@@ -126,7 +127,7 @@ public final class SearchBar {
                 break;
             case "artist":
                 List<String> artists = Admin.getUsers().stream()
-                        .filter(user -> user.getType()
+                        .filter(user1 -> user1.getType()
                                 .equals("artist"))
                         .map(User::getUsername)
                         .toList();
@@ -146,7 +147,7 @@ public final class SearchBar {
                 break;
             case "host":
                 List<String> hosts = Admin.getUsers().stream()
-                        .filter(user -> user.getType()
+                        .filter(user1 -> user1.getType()
                                 .equals("host"))
                         .map(User::getUsername)
                         .toList();
@@ -176,7 +177,7 @@ public final class SearchBar {
                 }
 
                 if (filters.getDescription() != null) {
-                entries = filterByOwner(entries, filters.getDescription());
+                    entries = filterByDescription(entries, filters.getDescription());
                 }
 
                 break;

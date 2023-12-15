@@ -1,12 +1,12 @@
 package fileio.input;
 
-import app.audio.Files.Episode;
-import app.audio.Files.Song;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.List;
-@Getter @Setter
+
+@Getter
+@Setter
 public final class CommandInput {
     private String command;
     private String username;
@@ -19,15 +19,16 @@ public final class CommandInput {
     private String playlistName; // pentru create playlist
     private Integer seed; // pentru shuffle
     private Integer age; // pentru add user
-    private String city;
-    private String name; // pentru album
+    private String city; // pentru add user
+    private String name;
     private Integer releaseYear;
     private String description;
     private List<SongInput> songs;
-    private String date;
-    private Integer price;
-    private List<EpisodeInput> episodes;
-    private String nextPage;
+    private String date; // event
+    private Integer price; // merch
+    private List<EpisodeInput> episodes; // podcast
+    private String nextPage; // changePage
+
     public CommandInput() {
     }
 
@@ -44,6 +45,16 @@ public final class CommandInput {
                 + ", playlistId=" + playlistId
                 + ", playlistName='" + playlistName + '\''
                 + ", seed=" + seed
+                + ", age=" + age
+                + ", city='" + city + '\''
+                + ", name='" + name + '\''
+                + ", releaseYear=" + releaseYear
+                + ", description='" + description + '\''
+                + ", songs=" + songs
+                + ", date='" + date + '\''
+                + ", price=" + price
+                + ", episodes=" + episodes
+                + ", nextPage='" + nextPage + '\''
                 + '}';
     }
 }

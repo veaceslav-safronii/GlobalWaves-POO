@@ -2,6 +2,7 @@ package main;
 
 import app.Admin;
 import app.CommandRunner;
+import app.CommandRunner2;
 import checker.Checker;
 import checker.CheckerConstants;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -111,24 +112,28 @@ public final class Main {
                 case "getPreferredGenre" -> outputs.add(CommandRunner.getPreferredGenre(command));
                 case "getTop5Songs" -> outputs.add(CommandRunner.getTop5Songs(command));
                 case "getTop5Playlists" -> outputs.add(CommandRunner.getTop5Playlists(command));
-                case "switchConnectionStatus" -> outputs.add(CommandRunner.switchConnectionStatus(command));
-                case "getOnlineUsers" -> outputs.add(CommandRunner.getOnlineUsers(command));
-                case "addUser" -> outputs.add(CommandRunner.addUser(command));
-                case "deleteUser" -> outputs.add(CommandRunner.deleteUser(command));
-                case "addAlbum" -> outputs.add(CommandRunner.addAlbum(command));
-                case "showAlbums" -> outputs.add(CommandRunner.showAlbums(command));
-                case "removeAlbum" -> outputs.add(CommandRunner.removeAlbum(command));
-                case "printCurrentPage" -> outputs.add(CommandRunner.printCurrentPage(command));
-                case "addMerch" -> outputs.add(CommandRunner.addMerch(command));
-                case "addEvent" -> outputs.add(CommandRunner.addEvent(command));
-                case "removeEvent" -> outputs.add(CommandRunner.removeEvent(command));
-                case "addPodcast" -> outputs.add(CommandRunner.addPodcast(command));
-                case "showPodcasts" -> outputs.add(CommandRunner.showPodcasts(command));
-                case "removePodcast" -> outputs.add(CommandRunner.removePodcast(command));
-                case "addAnnouncement" -> outputs.add(CommandRunner.addAnnouncement(command));
-                case "removeAnnouncement" -> outputs.add(CommandRunner.removeAnnouncement(command));
-                case "getAllUsers" -> outputs.add(CommandRunner.getAllUsers(command));
-                case "changePage" -> outputs.add(CommandRunner.changePage(command));
+                case "getTop5Albums" -> outputs.add(CommandRunner2.getTop5Albums(command));
+                case "getTop5Artists" -> outputs.add(CommandRunner2.getTop5Artists(command));
+                case "switchConnectionStatus" ->
+                        outputs.add(CommandRunner2.switchConnectionStatus(command));
+                case "getOnlineUsers" -> outputs.add(CommandRunner2.getOnlineUsers(command));
+                case "addUser" -> outputs.add(CommandRunner2.addUser(command));
+                case "deleteUser" -> outputs.add(CommandRunner2.deleteUser(command));
+                case "addAlbum" -> outputs.add(CommandRunner2.addAlbum(command));
+                case "showAlbums" -> outputs.add(CommandRunner2.showAlbums(command));
+                case "removeAlbum" -> outputs.add(CommandRunner2.removeAlbum(command));
+                case "printCurrentPage" -> outputs.add(CommandRunner2.printCurrentPage(command));
+                case "addMerch" -> outputs.add(CommandRunner2.addMerch(command));
+                case "addEvent" -> outputs.add(CommandRunner2.addEvent(command));
+                case "removeEvent" -> outputs.add(CommandRunner2.removeEvent(command));
+                case "addPodcast" -> outputs.add(CommandRunner2.addPodcast(command));
+                case "showPodcasts" -> outputs.add(CommandRunner2.showPodcasts(command));
+                case "removePodcast" -> outputs.add(CommandRunner2.removePodcast(command));
+                case "addAnnouncement" -> outputs.add(CommandRunner2.addAnnouncement(command));
+                case "removeAnnouncement" ->
+                        outputs.add(CommandRunner2.removeAnnouncement(command));
+                case "getAllUsers" -> outputs.add(CommandRunner2.getAllUsers(command));
+                case "changePage" -> outputs.add(CommandRunner2.changePage(command));
                 default -> System.out.println("Invalid command " + commandName);
             }
         }

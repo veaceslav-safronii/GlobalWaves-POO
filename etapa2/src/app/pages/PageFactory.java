@@ -5,8 +5,18 @@ import app.user.Artist;
 import app.user.Host;
 import app.user.NormalUser;
 
-public class PageFactory {
-    public static Page getPage(NormalUser user) {
+public final class PageFactory {
+
+    private PageFactory() {
+
+    }
+
+    /**
+     * Creates an instance of a specific type of page
+     * @param user the user
+     * @return page instance
+     */
+    public static Page getPage(final NormalUser user) {
         return switch (user.getCurrentPageType()) {
             case "Home" -> new HomePage(user.getLikedSongs(), user.getFollowedPlaylists());
             case "LikedContent" ->

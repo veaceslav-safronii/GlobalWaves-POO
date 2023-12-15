@@ -5,7 +5,6 @@ import app.extras.Event;
 import app.extras.Merch;
 import app.user.Artist;
 
-import javax.print.DocFlavor;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -14,12 +13,16 @@ public class ArtistPage  implements Page {
     private final List<Merch> merches;
     private final List<Event> events;
 
-    public ArtistPage(Artist artist) {
+    public ArtistPage(final Artist artist) {
         this.albums = artist.getAlbums();
         this.merches = artist.getMerches();
         this.events = artist.getEvents();
     }
 
+    /**
+     * Prints artist page
+     * @return the page content
+     */
 
     @Override
     public String printCurrentPage() {

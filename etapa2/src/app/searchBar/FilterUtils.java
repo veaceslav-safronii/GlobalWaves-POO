@@ -139,6 +139,12 @@ public final class FilterUtils {
         return filter(entries, entry -> entry.matchesFollowers(followers));
     }
 
+    /**
+     * Filter by description
+     * @param entries       the entries
+     * @param description   the followers
+     * @return the list
+     */
     public static List<LibraryEntry> filterByDescription(final List<LibraryEntry> entries,
                                       final String description) {
         return filter(entries, entry -> entry.matchesDescription(description));

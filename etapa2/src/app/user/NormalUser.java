@@ -6,21 +6,16 @@ import app.audio.Collections.PlaylistOutput;
 import app.audio.Files.AudioFile;
 import app.audio.Files.Song;
 import app.audio.LibraryEntry;
-import app.pages.HomePage;
-import app.pages.LikedContentPage;
-import app.pages.Page;
 import app.pages.PageFactory;
 import app.player.Player;
 import app.player.PlayerStats;
 import app.searchBar.Filters;
 import app.searchBar.SearchBar;
-import app.searchBar.UserEntry;
 import app.utils.Enums;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -275,7 +270,8 @@ public class NormalUser extends User {
             return "Please load a source before liking or unliking.";
         }
 
-        if (!player.getType().equals("song") && !player.getType().equals("playlist")) {
+        if (!player.getType().equals("song") && !player.getType().equals("playlist")
+                && !player.getType().equals("album")) {
             return "Loaded source is not a song.";
         }
 
@@ -525,19 +521,24 @@ public class NormalUser extends User {
         return getUsername() + " has changed status successfully.";
     }
 
-    public Page getPage () {
-        return PageFactory.getPage(this);
-    }
-
+    /**
+     * Prints current page
+     * @return content page
+     */
     public String printCurrentPage() {
         if (status == Enums.UserStatus.ONLINE) {
-            return getPage().printCurrentPage();
+            return PageFactory.getPage(this).printCurrentPage();
         } else {
             return getUsername() + " is offline.";
         }
     }
 
-    public String changePage(String nextPage) {
+    /**
+     * Changes the current page
+     * @param nextPage page to be changed to
+     * @return message
+     */
+    public String changePage(final String nextPage) {
         if (nextPage.equals("Home") || nextPage.equals("LikedContent")) {
             currentPageType = nextPage;
         } else {

@@ -4,11 +4,11 @@ import app.audio.LibraryEntry;
 
 public class UserEntry extends LibraryEntry {
     /**
-     * Instantiates a new Library entry.
+     * Instantiates a new User entry.
      *
      * @param name the name
      */
-    public UserEntry(String name) {
+    public UserEntry(final String name) {
         super(name);
     }
 }
